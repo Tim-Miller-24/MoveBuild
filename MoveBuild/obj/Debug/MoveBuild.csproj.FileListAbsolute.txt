@@ -1,0 +1,7 @@
+D:\Develop\С#\Work\MoveBuild\MoveBuild\bin\Debug\MoveBuild.exe.config
+D:\Develop\С#\Work\MoveBuild\MoveBuild\bin\Debug\MoveBuild.exe
+D:\Develop\С#\Work\MoveBuild\MoveBuild\bin\Debug\MoveBuild.pdb
+D:\Develop\С#\Work\MoveBuild\MoveBuild\obj\Debug\MoveBuild.csprojAssemblyReference.cache
+D:\Develop\С#\Work\MoveBuild\MoveBuild\obj\Debug\MoveBuild.csproj.CoreCompileInputs.cache
+D:\Develop\С#\Work\MoveBuild\MoveBuild\obj\Debug\MoveBuild.exe
+D:\Develop\С#\Work\MoveBuild\MoveBuild\obj\Debug\MoveBuild.pdb
