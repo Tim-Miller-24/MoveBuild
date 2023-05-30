@@ -58,6 +58,11 @@ namespace MoveBuild
             buildPath = separatedBuildName[0];
             buildPath = buildPath.TrimEnd();
 
+            if (buildPath.EndsWith(".ipa"))
+            {
+               buildPath = buildPath.Replace(".ipa", "");
+            }
+
             return buildPath;
         }
 
