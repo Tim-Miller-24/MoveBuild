@@ -28,10 +28,13 @@ namespace MoveBuild
 
             finalPath = CreatePath(appName, buildVersion, pathToMove);
 
-            Directory.CreateDirectory(finalPath);
+            if (!Directory.Exists(finalPath))
+            {
+                Directory.CreateDirectory(finalPath);
 
-            File.Move(lastBuildPath, Path.Combine(finalPath, $"{appName}.ipa"));
-
+                File.Move(lastBuildPath, Path.Combine(finalPath, $"{appName}.ipa"));
+            }
+            
             Process.Start("explorer.exe", finalPath);
         }
 
