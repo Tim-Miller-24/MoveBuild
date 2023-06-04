@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
 
 namespace MoveBuild
 {
@@ -12,17 +12,26 @@ namespace MoveBuild
         {
             string downloadPath = @"C:\Users\user\Downloads";
 
-            string pathToMove = @"D:\Amaya\builds";
+            string pathToMove = "";
 
             string buildVersion, lastBuildPath, finalPath, appName;
 
-            string[] allBuilds = Directory.GetFiles(downloadPath);
+            Console.WriteLine($"Default path where files come from: {downloadPath}.");
 
-            lastBuildPath = TakeLastBuild(allBuilds);
+            string[] filesInPath = Directory.GetFiles(downloadPath);
+
+            lastBuildPath = GetLastBuildPath(filesInPath);
+
+            if (lastBuildPath == null)
+            {
+                Console.WriteLine("There are no builds.");
+                Console.Read();
+                return;
+            }
 
             appName = GetAppName(lastBuildPath, downloadPath);
 
-            Console.WriteLine(appName);
+            Console.WriteLine($"App for replacing: {appName}.");
 
             buildVersion = SetBuildVersion();
 
@@ -34,23 +43,29 @@ namespace MoveBuild
 
                 File.Move(lastBuildPath, Path.Combine(finalPath, $"{appName}.ipa"));
             }
-            
+
             Process.Start("explorer.exe", finalPath);
         }
 
-        static string TakeLastBuild(string[] allBuilds)
+        static string GetLastBuildPath(string[] filesInPath)
         {
-            string lastBuild;
+            if (filesInPath.Length == 0) return null;
 
-            do
+            string lastBuildPath;
+            List<string> ipaFiles = new List<string>();
+
+            Array.Sort(filesInPath, (a, b) => new FileInfo(b).LastWriteTime.CompareTo(new FileInfo(a).LastWriteTime));
+
+            foreach (var file in filesInPath)
             {
-                Array.Sort(allBuilds, (a, b) => new FileInfo(b).LastWriteTime.CompareTo(new FileInfo(a).LastWriteTime));
+                if (file.EndsWith(".ipa")) ipaFiles.Add(file);
+            }
 
-            } while (!allBuilds[0].EndsWith(".ipa"));
+            if (ipaFiles.Count == 0) return null;
+            
+            lastBuildPath = ipaFiles[0];
 
-            lastBuild = allBuilds[0];
-
-            return lastBuild;
+            return lastBuildPath;
         }
 
         static string GetAppName(string buildPath, string path)
@@ -63,7 +78,7 @@ namespace MoveBuild
 
             if (buildPath.EndsWith(".ipa"))
             {
-               buildPath = buildPath.Replace(".ipa", "");
+                buildPath = buildPath.Replace(".ipa", "");
             }
 
             return buildPath;
@@ -72,7 +87,7 @@ namespace MoveBuild
         static string SetBuildVersion()
         {
             string buildVersion;
-            Console.WriteLine("Введите номер билда");
+            Console.Write("Write the build version: ");
 
             buildVersion = Console.ReadLine();
 
