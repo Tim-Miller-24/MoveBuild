@@ -83,8 +83,8 @@ namespace MoveBuild
             string[] separatedBuildName = buildPath.Split('(');
             string appName;
 
-            buildPath = separatedBuildName[0];
-            appName = buildPath.TrimEnd();
+            appName = separatedBuildName[0];
+            appName = appName.TrimEnd();
 
             if (appName.EndsWith(".ipa"))
             {
