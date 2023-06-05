@@ -33,7 +33,7 @@ namespace MoveBuild
 
             Console.WriteLine($"App for replacing: {appName}.");
 
-            buildVersion = SetBuildVersion();
+            buildVersion = GetBuildVersion();
 
             finalPath = CreatePath(appName, buildVersion, pathToMove);
 
@@ -49,7 +49,10 @@ namespace MoveBuild
 
         static string GetLastBuildPath(string[] filesInPath)
         {
-            if (filesInPath.Length == 0) return null;
+            if (filesInPath.Length == 0)
+            {
+                return null;
+            }
 
             string lastBuildPath;
             List<string> ipaFiles = new List<string>();
@@ -58,10 +61,16 @@ namespace MoveBuild
 
             foreach (var file in filesInPath)
             {
-                if (file.EndsWith(".ipa")) ipaFiles.Add(file);
+                if (file.EndsWith(".ipa"))
+                {
+                    ipaFiles.Add(file);
+                }
             }
 
-            if (ipaFiles.Count == 0) return null;
+            if (ipaFiles.Count == 0)
+            {
+                return null;
+            }
             
             lastBuildPath = ipaFiles[0];
 
@@ -72,19 +81,20 @@ namespace MoveBuild
         {
             buildPath = buildPath.Replace($@"{path}\", "");
             string[] separatedBuildName = buildPath.Split('(');
+            string appName;
 
             buildPath = separatedBuildName[0];
-            buildPath = buildPath.TrimEnd();
+            appName = buildPath.TrimEnd();
 
-            if (buildPath.EndsWith(".ipa"))
+            if (appName.EndsWith(".ipa"))
             {
-                buildPath = buildPath.Replace(".ipa", "");
+                appName = appName.Replace(".ipa", "");
             }
 
-            return buildPath;
+            return appName;
         }
 
-        static string SetBuildVersion()
+        static string GetBuildVersion()
         {
             string buildVersion;
             Console.Write("Write the build version: ");
@@ -93,7 +103,7 @@ namespace MoveBuild
 
             if (!buildVersion.Any(char.IsDigit))
             {
-                SetBuildVersion();
+                GetBuildVersion();
             }
 
             return buildVersion;
