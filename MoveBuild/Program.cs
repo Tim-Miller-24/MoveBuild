@@ -12,7 +12,7 @@ namespace MoveBuild
         {
             string downloadPath = @"C:\Users\user\Downloads";
 
-            string pathToMove = "";
+            string pathToMove = @"D:\Amaya\builds";
 
             string buildVersion, lastBuildPath, finalPath, appName;
 
