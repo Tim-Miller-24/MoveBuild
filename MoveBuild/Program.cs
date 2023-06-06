@@ -22,7 +22,7 @@ namespace MoveBuild
 
             lastBuildPath = GetLastBuildPath(filesInPath);
 
-            if (lastBuildPath == null)
+            if (lastBuildPath == string.Empty)
             {
                 Console.WriteLine("There are no builds.");
                 Console.Read();
@@ -51,7 +51,7 @@ namespace MoveBuild
         {
             if (filesInPath.Length == 0)
             {
-                return null;
+                return string.Empty;
             }
 
             string lastBuildPath;
@@ -69,7 +69,7 @@ namespace MoveBuild
 
             if (ipaFiles.Count == 0)
             {
-                return null;
+                return string.Empty;
             }
             
             lastBuildPath = ipaFiles[0];
